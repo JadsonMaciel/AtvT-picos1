@@ -1,3 +1,8 @@
+import { Entidade } from "./models/Entidade";
+import { Pessoa } from "./models/Pessoa";
+import { Carro } from "./models/Carro";
+import { Produto } from "./models/Produto";
+
 
 // Criar objetos para cada classe
 const pessoa1 = new Pessoa("João", 25, "São Paulo");

@@ -1,8 +1,9 @@
 {
   "name": "poo",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "Atv3.js",
   "scripts": {
+    "start": "tsc && node ./dist/Atv3.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
