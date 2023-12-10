@@ -19,27 +19,26 @@ var Entidade = /** @class */ (function () {
         this._nome = nome;
     }
     Object.defineProperty(Entidade.prototype, "nome", {
-        // Getter for nome
         get: function () {
             return this._nome;
         },
         enumerable: false,
         configurable: true
     });
-    // Getter for nome
-    Entidade.prototype.getnome = function () {
-        return this._nome;
-    };
-    Entidade.prototype.setnome = function (nome) {
-        this._nome = nome;
-    };
-    // Polymorphic method
+    //acessar atributo privado
+    // getnome()  {
+    //   return this._nome;
+    // }
+    // setnome(nome: string){
+    //   this._nome = nome;
+    // }
     Entidade.prototype.apresentar = function () {
         console.log("Ol\u00E1, eu sou ".concat(this.nome, "."));
     };
     return Entidade;
 }());
 // Classe 1 - Pessoa
+//Criando uma herança
 var Pessoa = /** @class */ (function (_super) {
     __extends(Pessoa, _super);
     function Pessoa(nome, idade, cidade) {
@@ -48,13 +47,13 @@ var Pessoa = /** @class */ (function (_super) {
         _this._cidade = cidade;
         return _this;
     }
-    // Overriding the apresentar method with polymorphism
     Pessoa.prototype.apresentar = function () {
         console.log("Ol\u00E1, eu sou ".concat(this.nome, ", tenho ").concat(this._idade, " anos e moro em ").concat(this._cidade, "."));
     };
     return Pessoa;
 }(Entidade));
 // Classe 2 - Produto
+//Criando uma herança
 var Produto = /** @class */ (function (_super) {
     __extends(Produto, _super);
     function Produto(nome, preco, categoria) {
@@ -63,13 +62,13 @@ var Produto = /** @class */ (function (_super) {
         _this._categoria = categoria;
         return _this;
     }
-    // Overriding the apresentar method with polymorphism
     Produto.prototype.apresentar = function () {
         console.log("Produto: ".concat(this.nome, ", Pre\u00E7o: R$").concat(this._preco.toFixed(2), ", Categoria: ").concat(this._categoria, "."));
     };
     return Produto;
 }(Entidade));
 // Classe 3 - Carro
+//Criando uma herança
 var Carro = /** @class */ (function (_super) {
     __extends(Carro, _super);
     function Carro(nome, ano, cor) {
@@ -78,13 +77,8 @@ var Carro = /** @class */ (function (_super) {
         _this._cor = cor;
         return _this;
     }
-    // Overriding the apresentar method with polymorphism
     Carro.prototype.apresentar = function () {
         console.log("".concat(this.nome, " \u00E9 um carro fabricado em ").concat(this._ano, " e tem a cor ").concat(this._cor, "."));
-    };
-    // New method specific to Carro
-    Carro.prototype.ligar = function () {
-        console.log("".concat(this.nome, " est\u00E1 ligado."));
     };
     return Carro;
 }(Entidade));
