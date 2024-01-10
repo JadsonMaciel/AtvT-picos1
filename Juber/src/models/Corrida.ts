@@ -3,9 +3,15 @@ import { Usuario } from "./Usuario";
 
 // Definindo a classe para corridas
 export class Corrida {
+
     private motorista: Motorista | null = null;
-  
-    constructor(public passageiro: Usuario, public destino: string) {}
+    public destino: string;
+    public passageiro: Usuario;
+    
+    constructor(passageiro: Usuario, destino: string) {
+        this.passageiro=passageiro
+        this.destino=destino
+    }
   
     designarMotorista(motorista: Motorista): void {
       this.motorista = motorista;

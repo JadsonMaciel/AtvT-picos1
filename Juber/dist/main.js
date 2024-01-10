@@ -13,6 +13,6 @@ const motorista1 = new Motorista_1.Motorista('Thiago', 101, 'Carro1');
 const motorista2 = new Motorista_1.Motorista('Bruno', 102, 'Carro2');
 sistemaUber.adicionarMotorista(motorista1);
 sistemaUber.adicionarMotorista(motorista2);
-sistemaUber.solicitarCorrida(usuario1, 'DestinoA');
+sistemaUber.solicitarCorrida(usuario2, 'DestinoA');
 sistemaUber.designarMotoristaParaCorrida(motorista1, sistemaUber.getCorridas()[0]);
 sistemaUber.iniciarCorrida(sistemaUber.getCorridas()[0]);

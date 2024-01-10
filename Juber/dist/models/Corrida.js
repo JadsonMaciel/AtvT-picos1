@@ -4,9 +4,9 @@ exports.Corrida = void 0;
 // Definindo a classe para corridas
 class Corrida {
     constructor(passageiro, destino) {
+        this.motorista = null;
         this.passageiro = passageiro;
         this.destino = destino;
-        this.motorista = null;
     }
     designarMotorista(motorista) {
         this.motorista = motorista;

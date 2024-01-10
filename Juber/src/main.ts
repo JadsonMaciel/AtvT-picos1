@@ -3,6 +3,7 @@ import { SistemaUber } from "./models/Sistemauber";
 import { Motorista } from "./models/Motorista";
 
 
+
   // Exemplo de uso do sistema Uber
   const sistemaUber = new SistemaUber();
   
@@ -18,8 +19,9 @@ import { Motorista } from "./models/Motorista";
   sistemaUber.adicionarMotorista(motorista1);
   sistemaUber.adicionarMotorista(motorista2);
   
-  sistemaUber.solicitarCorrida(usuario1, 'DestinoA');
+  sistemaUber.solicitarCorrida(usuario2, 'DestinoA');
   sistemaUber.designarMotoristaParaCorrida(motorista1, sistemaUber.getCorridas()[0]);
   sistemaUber.iniciarCorrida(sistemaUber.getCorridas()[0]);
-  
+
+
   
