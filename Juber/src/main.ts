@@ -1,10 +1,11 @@
 import { Usuario } from "./models/Usuario";
 import { SistemaUber } from "./models/Sistemauber";
 import { Motorista } from "./models/Motorista";
+import "reflect-metadata"
 
 
 
-  // Exemplo de uso do sistema Uber
+  
   const sistemaUber = new SistemaUber();
   
   const usuario1 = new Usuario('Jadson', 1);
