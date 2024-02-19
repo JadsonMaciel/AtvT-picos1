@@ -1,16 +1,24 @@
-import { Usuario } from "./Usuario";
+import { Entity, Column, OneToMany, JoinColumn } from "typeorm";
+import { Pessoa } from "./Pessoa";
 import { Corrida } from "./Corrida";
-// Definindo a classe para motoristas
-export class Motorista extends Usuario {
-    public modeloCarro: string;
-    
+
+@Entity()
+export class Motorista extends Pessoa {
+    @Column()
+    modeloCarro: string;
+
+    @OneToMany(() => Corrida, corrida => corrida.motorista)
+    @JoinColumn()
+    corridas: Corrida[];
+    sistemaUber: any;
+
     constructor(nome: string, id: number, modeloCarro: string) {
-      super(nome, id);
-      this.modeloCarro=modeloCarro
+        super(nome, id);
+        this.modeloCarro = modeloCarro;
     }
-  
+
     aceitarCorrida(corrida: Corrida): void {
-      corrida.designarMotorista(this);
+        corrida.designarMotorista(this);
     }
-  }
-  
+}
+

@@ -1,36 +1,103 @@
-import { Usuario } from "./Usuario";
+// import { Entity, PrimaryGeneratedColumn, OneToMany, getRepository } from "typeorm";
+// import { Passageiro } from "./Passageiro";
+// import { Motorista } from "./Motorista";
+// import { Corrida } from "./Corrida";
+
+// @Entity()
+// export class SistemaUber {
+//     @PrimaryGeneratedColumn()
+//     id: number;
+
+//     @OneToMany(() => Passageiro, passageiro => passageiro.sistemaUber)
+//     usuarios: Passageiro[];
+
+//     @OneToMany(() => Motorista, motorista => motorista.sistemaUber)
+//     motoristas: Motorista[];
+
+//     @OneToMany(() => Corrida, corrida => corrida.sistemaUber)
+//     corridas: Corrida[];
+
+//     async adicionarUsuario(passageiro: Passageiro): Promise<void> {
+//         const passageiroRepository = getRepository(Passageiro);
+//         await passageiroRepository.save(passageiro);
+//     }
+
+//     async adicionarMotorista(motorista: Motorista): Promise<void> {
+//         const motoristaRepository = getRepository(Motorista);
+//         await motoristaRepository.save(motorista);
+//     }
+
+//     async solicitarCorrida(passageiro: Passageiro, destino: string): Promise<void> {
+//         const corrida = passageiro.solicitarCorrida(destino);
+//         const corridaRepository = getRepository(Corrida);
+//         await corridaRepository.save(corrida);
+//         console.log(`Corrida solicitada por ${passageiro.nome} para ${destino}.`);
+//     }
+
+//     designarMotoristaParaCorrida(motorista: Motorista, corrida: Corrida): void {
+//         motorista.aceitarCorrida(corrida);
+//     }
+
+//     iniciarCorrida(corrida: Corrida): void {
+//         corrida.iniciarCorrida();
+//     }
+
+//     // Método para acessar a lista de corridas
+//     async getCorridas(): Promise<Corrida[]> {
+//         const corridaRepository = getRepository(Corrida);
+//         return await corridaRepository.find();
+//     }
+// }
+
+import { Entity, PrimaryGeneratedColumn, OneToMany, EntityManager } from "typeorm";
+import { Passageiro } from "./Passageiro";
 import { Motorista } from "./Motorista";
 import { Corrida } from "./Corrida";
-// Classe principal que gerencia o sistema Uber
+import { InjectEntityManager } from "@nestjs/typeorm";
+
+@Entity()
 export class SistemaUber {
-    private usuarios: Usuario[] = [];
-    private motoristas: Motorista[] = [];
-    private corridas: Corrida[] = [];
-  
-    adicionarUsuario(usuario: Usuario): void {
-      this.usuarios.push(usuario);
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @OneToMany(() => Passageiro, passageiro => passageiro.sistemaUber)
+    usuarios: Passageiro[];
+
+    @OneToMany(() => Motorista, motorista => motorista.sistemaUber)
+    motoristas: Motorista[];
+
+    @OneToMany(() => Corrida, corrida => corrida.sistemaUber)
+    corridas: Corrida[];
+
+    constructor(
+        @InjectEntityManager()
+        private readonly entityManager: EntityManager
+    ) {}
+
+    async adicionarUsuario(passageiro: Passageiro): Promise<void> {
+        await this.entityManager.save(Passageiro, passageiro);
     }
-  
-    adicionarMotorista(motorista: Motorista): void {
-      this.motoristas.push(motorista);
+
+    async adicionarMotorista(motorista: Motorista): Promise<void> {
+        await this.entityManager.save(Motorista, motorista);
     }
-  
-    solicitarCorrida(usuario: Usuario, destino: string): void {
-      const corrida = usuario.solicitarCorrida(destino);
-      this.corridas.push(corrida);
-      console.log(`Corrida solicitada por ${usuario.nome} para ${destino}.`);
+
+    async solicitarCorrida(passageiro: Passageiro, destino: string): Promise<void> {
+        const corrida = passageiro.solicitarCorrida(destino);
+        await this.entityManager.save(Corrida, corrida);
+        console.log(`Corrida solicitada por ${passageiro.nome} para ${destino}.`);
     }
-  
+
     designarMotoristaParaCorrida(motorista: Motorista, corrida: Corrida): void {
-      motorista.aceitarCorrida(corrida);
+        motorista.aceitarCorrida(corrida);
     }
-  
+
     iniciarCorrida(corrida: Corrida): void {
-      corrida.iniciarCorrida();
+        corrida.iniciarCorrida();
     }
-  
+
     // Método para acessar a lista de corridas
-    getCorridas(): Corrida[] {
-      return this.corridas;
+    async getCorridas(): Promise<Corrida[]> {
+        return await this.entityManager.find(Corrida);
     }
-  }
+}
