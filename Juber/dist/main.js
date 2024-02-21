@@ -30,12 +30,28 @@ const AppDataSource = new typeorm_1.DataSource({
 AppDataSource.initialize().then(() => __awaiter(void 0, void 0, void 0, function* () {
     const entityManager = new typeorm_1.EntityManager(AppDataSource); // Create an instance of the EntityManager class with the AppDataSource argument
     const sistemaUber = new Sistemauber_1.SistemaUber(entityManager); // Pass the instance of EntityManager to the SistemaUber constructor
-    const usuario1 = new Passageiro_1.Passageiro('Jadson', 1);
-    const usuario2 = new Passageiro_1.Passageiro('Paulo', 2);
+    const usuario1 = new Passageiro_1.PassageiroBuilder()
+        .setNome('JADSON')
+        .setId(1)
+        .build();
+    const usuario2 = new Passageiro_1.PassageiroBuilder()
+        .setNome('PAULO')
+        .setId(2)
+        .build();
     yield sistemaUber.adicionarUsuario(usuario1);
     yield sistemaUber.adicionarUsuario(usuario2);
-    const motorista1 = new Motorista_1.Motorista('Thiago', 101, 'Carro1');
-    const motorista2 = new Motorista_1.Motorista('Bruno', 102, 'Carro2');
+    const motorista1 = new Motorista_1.MotoristaBuilder()
+        .setNome('THIAGO')
+        .setId(101)
+        .setCarro('Carro1')
+        .build();
+    const motorista2 = new Motorista_1.MotoristaBuilder()
+        .setNome('BRUNO')
+        .setId(102)
+        .setCarro('Carro2')
+        .build();
+    sistemaUber.addObserver(motorista1);
+    sistemaUber.addObserver(motorista2);
     yield sistemaUber.adicionarMotorista(motorista1);
     yield sistemaUber.adicionarMotorista(motorista2);
     const corridas = yield sistemaUber.getCorridas();

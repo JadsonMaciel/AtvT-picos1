@@ -68,8 +68,21 @@ const Motorista_1 = require("./Motorista");
 const Corrida_1 = require("./Corrida");
 const typeorm_2 = require("@nestjs/typeorm");
 let SistemaUber = class SistemaUber {
+    addObserver(observers) {
+        this.observers.push(observers);
+    }
+    removeObserver(observers) {
+        const index = this.observers.indexOf(observers);
+        this.observers.splice(index, 1);
+    }
+    notifyObservers(corrida) {
+        this.observers.forEach(observer => observer.update(corrida));
+    }
+    // fim observer
     constructor(entityManager) {
         this.entityManager = entityManager;
+        //Observer
+        this.observers = [];
     }
     adicionarUsuario(passageiro) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -85,7 +98,8 @@ let SistemaUber = class SistemaUber {
         return __awaiter(this, void 0, void 0, function* () {
             const corrida = passageiro.solicitarCorrida(destino);
             yield this.entityManager.save(Corrida_1.Corrida, corrida);
-            console.log(`Corrida solicitada por ${passageiro.nome} para ${destino}.`);
+            this.notifyObservers(corrida);
+            console.log('Corrida solicitada.');
         });
     }
     designarMotoristaParaCorrida(motorista, corrida) {

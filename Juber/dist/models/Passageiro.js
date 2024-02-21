@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Passageiro = void 0;
+exports.PassageiroBuilder = exports.Passageiro = void 0;
 const typeorm_1 = require("typeorm");
 const Pessoa_1 = require("./Pessoa");
 const Corrida_1 = require("./Corrida");
@@ -31,3 +31,17 @@ exports.Passageiro = Passageiro = __decorate([
     (0, typeorm_1.Entity)(),
     __metadata("design:paramtypes", [String, Number])
 ], Passageiro);
+class PassageiroBuilder {
+    setNome(nome) {
+        this.nome = nome;
+        return this;
+    }
+    setId(id) {
+        this.id = id;
+        return this;
+    }
+    build() {
+        return new Passageiro(this.nome, this.id);
+    }
+}
+exports.PassageiroBuilder = PassageiroBuilder;

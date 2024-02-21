@@ -1,4 +1,8 @@
 "use strict";
+// import { Motorista } from "./Motorista";
+// import { Passageiro } from "./Passageiro";
+// // Definindo a classe para corridas
+// export class Corrida {
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -10,6 +14,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Corrida = void 0;
+//   private motorista: Motorista | null = null;
+//   public destino: string;
+//   public passageiro: Passageiro;
+//   constructor(passageiro: Passageiro, destino: string) {
+//       this.passageiro=passageiro
+//       this.destino=destino
+//   }
+//   designarMotorista(motorista: Motorista): void {
+//     this.motorista = motorista;
+//     console.log(`Motorista ${motorista.nome} designado para a corrida.`);
+//   }
+//   iniciarCorrida(): void {
+//     if (this.motorista) {
+//       console.log(`Corrida para ${this.destino} iniciada com o motorista ${this.motorista.nome}.`);
+//     } else {
+//       console.log('Nenhum motorista designado para a corrida.');
+//     }
+//   }
+// }
 const typeorm_1 = require("typeorm");
 const Passageiro_1 = require("./Passageiro");
 const Motorista_1 = require("./Motorista");

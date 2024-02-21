@@ -54,9 +54,10 @@ import { Passageiro } from "./Passageiro";
 import { Motorista } from "./Motorista";
 import { Corrida } from "./Corrida";
 import { InjectEntityManager } from "@nestjs/typeorm";
+import { Observer, Subject } from "./Observer";
 
 @Entity()
-export class SistemaUber {
+export class SistemaUber implements Subject{
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -68,7 +69,22 @@ export class SistemaUber {
 
     @OneToMany(() => Corrida, corrida => corrida.sistemaUber)
     corridas: Corrida[];
+//Observer
+    private observers: Observer[] = [];
+    
+    addObserver(observers: Observer): void {
+        this.observers.push(observers);
+    }
 
+    removeObserver(observers: Observer): void {
+        const index = this.observers.indexOf(observers);
+        this.observers.splice(index, 1);
+    }
+
+    notifyObservers(corrida:Corrida): void {
+        this.observers.forEach(observer => observer.update(corrida));
+    }
+// fim observer
     constructor(
         @InjectEntityManager()
         private readonly entityManager: EntityManager
@@ -85,7 +101,8 @@ export class SistemaUber {
     async solicitarCorrida(passageiro: Passageiro, destino: string): Promise<void> {
         const corrida = passageiro.solicitarCorrida(destino);
         await this.entityManager.save(Corrida, corrida);
-        console.log(`Corrida solicitada por ${passageiro.nome} para ${destino}.`);
+        this.notifyObservers(corrida);
+        console.log('Corrida solicitada.');
     }
 
     designarMotoristaParaCorrida(motorista: Motorista, corrida: Corrida): void {

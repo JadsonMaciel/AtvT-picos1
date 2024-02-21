@@ -1,7 +1,7 @@
 
-import { Passageiro } from "./models/Passageiro";
+import { Passageiro, PassageiroBuilder } from "./models/Passageiro";
 import { SistemaUber } from "./models/Sistemauber";
-import { Motorista } from "./models/Motorista";
+import { Motorista, MotoristaBuilder } from "./models/Motorista";
 import { Corrida } from "./models/Corrida";
 import { Pessoa } from "./models/Pessoa";
 import { DataSource, EntityManager } from 'typeorm';
@@ -20,19 +20,39 @@ const AppDataSource = new DataSource({
 });
 
 AppDataSource.initialize().then(async () => {
-  const entityManager = new EntityManager(AppDataSource); // Create an instance of the EntityManager class with the AppDataSource argument
+  const entityManager = new EntityManager(AppDataSource); 
 
-  const sistemaUber = new SistemaUber(entityManager); // Pass the instance of EntityManager to the SistemaUber constructor
+  const sistemaUber = new SistemaUber(entityManager); 
 
-  const usuario1 = new Passageiro('Jadson', 1);
-  const usuario2 = new Passageiro('Paulo', 2);
+  const usuario1 = new PassageiroBuilder()
+    .setNome('JADSON')
+    .setId(1)
+    .build();
+
+  const usuario2 = new PassageiroBuilder()
+    .setNome('PAULO')
+    .setId(2)
+    .build();
+  
 
   await sistemaUber.adicionarUsuario(usuario1);
   await sistemaUber.adicionarUsuario(usuario2);
 
-  const motorista1 = new Motorista('Thiago', 101, 'Carro1');
-  const motorista2 = new Motorista('Bruno', 102, 'Carro2');
+  const motorista1 = new MotoristaBuilder()
+  .setNome('THIAGO')
+  .setId(101)
+  .setCarro('Carro1')
+  .build();
 
+  const motorista2 = new MotoristaBuilder()
+  .setNome('BRUNO')
+  .setId(102)
+  .setCarro('Carro2')
+  .build();
+
+  sistemaUber.addObserver(motorista1);
+  sistemaUber.addObserver(motorista2);
+  
   await sistemaUber.adicionarMotorista(motorista1);
   await sistemaUber.adicionarMotorista(motorista2);
 

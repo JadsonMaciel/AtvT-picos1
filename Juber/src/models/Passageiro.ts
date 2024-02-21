@@ -5,7 +5,7 @@ import { Corrida } from "./Corrida";
 @Entity()
 export class Passageiro extends Pessoa {
     sistemaUber: any;
-    constructor(nome: string, id: number) {
+    constructor ( nome: string, id: number) {
         super(nome, id);
     }
 
@@ -18,3 +18,23 @@ export class Passageiro extends Pessoa {
     }
 }
 
+   export class PassageiroBuilder {
+          nome: string;
+          id: number;
+        setNome(nome: string): PassageiroBuilder {
+            this.nome = nome;
+            return this;
+        }
+
+        setId(id: number): PassageiroBuilder {
+            this.id = id;
+            return this;
+        }
+
+        build(): Passageiro {
+            return new Passageiro(this.nome, this.id);
+        }
+    }
+    
+
+   
